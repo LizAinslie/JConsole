@@ -33,7 +33,7 @@ public class Console extends JPanel implements KeyListener, Runnable {
 
 		this.textInputField = new JTextField(columns);
 		this.textInputField.addKeyListener(this);
-		this.textInputField.setVisible(false);
+		this.textInputField.setEnabled(false);
 		this.add(this.textInputField, BorderLayout.PAGE_END);
 
 		this.messages = new JList<>(this.lModel);
@@ -77,6 +77,21 @@ public class Console extends JPanel implements KeyListener, Runnable {
 	}
 
 	/**
+	 * Send a string-based console message.
+	 * @param s The string to send.
+	 */
+	public void sendMessage(String s) {
+		this.sendMessage(new StringConsoleMessage(s));
+	}
+
+	/**
+	 * Send an empty message.
+	 */
+	public void sendMessage() {
+		this.sendMessage("");
+	}
+
+	/**
 	 * Prompt the user for a string.
 	 * @param prompt The prompt text.
 	 * @return The result of the prompt.
@@ -85,7 +100,7 @@ public class Console extends JPanel implements KeyListener, Runnable {
 		try {
 			this.sendMessage(new StringConsoleMessage(ConsoleMessageType.OUT, prompt));
 
-			this.textInputField.setVisible(true);
+			this.textInputField.setEnabled(true);
 
 			while (this.text == null) Thread.sleep(500);
 
@@ -110,7 +125,9 @@ public class Console extends JPanel implements KeyListener, Runnable {
 				String text = this.textInputField.getText();
 				this.text = text;
 				this.sendMessage(new StringConsoleMessage(ConsoleMessageType.IN, text));
-				this.textInputField.setVisible(false);
+
+				this.textInputField.setEnabled(false);
+				this.textInputField.setText("");
 				break;
 			default:
 				break;

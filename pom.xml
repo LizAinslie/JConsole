@@ -4,7 +4,7 @@
 
     <groupId>me.railrunner16</groupId>
     <artifactId>JConsole</artifactId>
-    <version>1.0.0-r1</version>
+    <version>1.0.0-r2.1</version>
 
     <distributionManagement>
         <repository>

@@ -20,6 +20,14 @@ public class ListConsoleMessage<T> extends ConsoleMessage<List<T>> {
     }
 
     /**
+     * Create a new list-based console message with a default type of <code>ConsoleMessageType.OUT</code>.
+     * @param l
+     */
+    public ListConsoleMessage(List<T> l) {
+        this(ConsoleMessageType.OUT, l);
+    }
+
+    /**
      * Serialize the value list to a string.
      */
     @Override

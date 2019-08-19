@@ -8,7 +8,9 @@ public class ConsoleExample {
 		console.run();
 
 		String s = console.promptString("Test String: ");
-
 		System.out.println(s);
+
+		String s2 = console.promptString("Test String: ");
+		System.out.println(s2);
 	}
 }
