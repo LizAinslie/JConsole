@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>me.railrunner16</groupId>
-    <artifactId>RailConsole</artifactId>
+    <artifactId>JConsole</artifactId>
     <version>1.0.0-r1</version>
 
     <distributionManagement>
