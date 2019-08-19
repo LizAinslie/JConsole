@@ -10,6 +10,10 @@ import java.awt.event.KeyListener;
 
 import javax.swing.*;
 
+/**
+ * A visual I/O console.
+ * @author RailRunner16
+ */
 public class Console extends JPanel implements KeyListener, Runnable {
 	public static final long serialVersionUID = 1L;
 
@@ -19,6 +23,11 @@ public class Console extends JPanel implements KeyListener, Runnable {
 	private JTextField textInputField;
 	private String text = null;
 
+	/**
+	 * Create a new console.
+	 * @param columns The amount of columns.
+	 * @param welcome The welcome message.
+	 */
 	public Console(int columns, String welcome) {
 		super(new BorderLayout());
 
@@ -36,22 +45,42 @@ public class Console extends JPanel implements KeyListener, Runnable {
 		if (welcome != null) this.sendMessage(new StringConsoleMessage(ConsoleMessageType.OUT, welcome));
 	}
 
+	/**
+	 * Create a new console with no welcome message and a specific amount of columns.
+	 * @param columns The amount of columns.
+	 */
 	public Console(int columns) {
 		this(columns, null);
 	}
 
+	/**
+	 * Create a new console with default columns and a custom welcome message.
+	 * @param welcome The welcome message.
+	 */
 	public Console(String welcome) {
 		this(20, welcome);
 	}
 
+	/**
+	 * Create a console with default columns and no welcome message.
+	 */
 	public Console() {
 		this(20);
 	}
 
+	/**
+	 * Send a message to the console.
+	 * @param message The message to send.
+	 */
 	public void sendMessage(ConsoleMessage<?> message) {
-		this.lModel.addElement(message.getPreString() + " " + message.getAsString());
+		this.lModel.addElement(message.getType().getPreString() + " " + message.getAsString());
 	}
 
+	/**
+	 * Prompt the user for a string.
+	 * @param prompt The prompt text.
+	 * @return The result of the prompt.
+	 */
 	public String promptString(String prompt) {
 		try {
 			this.sendMessage(new StringConsoleMessage(ConsoleMessageType.OUT, prompt));
@@ -88,6 +117,9 @@ public class Console extends JPanel implements KeyListener, Runnable {
 		}
 	}
 
+	/**
+	 * Run the console.
+	 */
 	@Override
 	public void run() {
 		JFrame f = new JFrame("Console");
@@ -99,12 +131,4 @@ public class Console extends JPanel implements KeyListener, Runnable {
 		f.setSize(this.textInputField.getColumns() * 10, 400);
 		f.setVisible(true);
 	}
-
-//	public static void main(String[] args) {
-//		Console c = new Console("Welcome!");
-//		c.run();
-//
-//		String s = c.promptString("Enter a test string: ");
-//		System.out.println(s);
-//	}
 }

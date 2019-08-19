@@ -1,20 +1,19 @@
 package me.railrunner16.console.message;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-@Getter
+/**
+ * A console message.
+ * @author RailRunner16
+ */
+@Getter @AllArgsConstructor
 public abstract class ConsoleMessage<T> {
 	private final ConsoleMessageType type;
 	protected final T value;
 
-	public ConsoleMessage(ConsoleMessageType type, T value) {
-		this.type = type;
-		this.value = value;
-	}
-
-	public String getPreString() {
-		return this.type.getPreString();
-	}
-
+	/**
+	 * Get the console message as a string.
+	 */
 	public abstract String getAsString();
 }
