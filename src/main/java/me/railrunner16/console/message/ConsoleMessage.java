@@ -14,6 +14,7 @@ public abstract class ConsoleMessage<T> {
 
 	/**
 	 * Get the console message as a string.
+	 * @return The value as a string.
 	 */
 	public abstract String getAsString();
 }
