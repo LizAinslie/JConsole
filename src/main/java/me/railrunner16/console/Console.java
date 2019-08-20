@@ -5,6 +5,8 @@ import me.railrunner16.console.message.ConsoleMessageType;
 import me.railrunner16.console.message.messages.StringConsoleMessage;
 
 import java.awt.BorderLayout;
+import java.awt.event.AdjustmentEvent;
+import java.awt.event.AdjustmentListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -37,8 +39,12 @@ public class Console extends JPanel implements KeyListener, Runnable {
 		this.add(this.textInputField, BorderLayout.PAGE_END);
 
 		this.messages = new JList<>(this.lModel);
-		this.messages.setAutoscrolls(true);
-		this.add(this.messages, BorderLayout.CENTER);
+
+		JScrollPane pane = new JScrollPane(this.messages);
+		pane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		pane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+
+		this.add(pane, BorderLayout.CENTER);
 
 		this.setSize(this.textInputField.getColumns() * 10, 400);
 
@@ -74,6 +80,9 @@ public class Console extends JPanel implements KeyListener, Runnable {
 	 */
 	public void sendMessage(ConsoleMessage<?> message) {
 		this.lModel.addElement(message.getType().getPreString() + " " + message.getAsString());
+
+		this.messages.setSelectedIndex(this.messages.getModel().getSize() - 1);
+		this.messages.ensureIndexIsVisible(this.messages.getSelectedIndex());
 	}
 
 	/**
@@ -88,7 +97,10 @@ public class Console extends JPanel implements KeyListener, Runnable {
 	 * Send an empty message.
 	 */
 	public void sendMessage() {
-		this.sendMessage("");
+		this.lModel.addElement("");
+
+		this.messages.setSelectedIndex(this.messages.getModel().getSize() - 1);
+		this.messages.ensureIndexIsVisible(this.messages.getSelectedIndex());
 	}
 
 	/**
@@ -101,6 +113,8 @@ public class Console extends JPanel implements KeyListener, Runnable {
 			this.sendMessage(new StringConsoleMessage(ConsoleMessageType.OUT, prompt));
 
 			this.textInputField.setEnabled(true);
+			this.textInputField.setText(null);
+			this.textInputField.grabFocus();
 
 			while (this.text == null) Thread.sleep(500);
 
@@ -127,7 +141,7 @@ public class Console extends JPanel implements KeyListener, Runnable {
 				this.sendMessage(new StringConsoleMessage(ConsoleMessageType.IN, text));
 
 				this.textInputField.setEnabled(false);
-				this.textInputField.setText("");
+				this.textInputField.setText(null);
 				break;
 			default:
 				break;
